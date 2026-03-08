@@ -6,6 +6,7 @@ import Sidebar from "@/components/shell/Sidebar";
 import Topbar from "@/components/shell/Topbar";
 import Panel from "@/components/shell/Panel";
 import { getDashboardSummary } from "@/lib/api";
+import { getSocket } from "@/lib/socket";
 
 export default function DashboardPage() {
   const [summary, setSummary] = useState(null);
@@ -15,6 +16,30 @@ export default function DashboardPage() {
     getDashboardSummary()
       .then((res) => setSummary(res.data))
       .catch((err) => setError(err.message));
+  }, []);
+
+  useEffect(() => {
+    const socket = getSocket();
+
+    socket.on("alarm.created", (alarm) => {
+      setSummary((current) => {
+        if (!current) return current;
+
+        const next = { ...current };
+
+        if (alarm.severity === "Critical") {
+          next.criticalAlarms = (next.criticalAlarms || 0) + 1;
+        }
+
+        // como o simulador usa site-002 que está Down no seed,
+        // mantemos a contagem coerente sem mexer à força aqui.
+        return next;
+      });
+    });
+
+    return () => {
+      socket.off("alarm.created");
+    };
   }, []);
 
   const cards = summary
