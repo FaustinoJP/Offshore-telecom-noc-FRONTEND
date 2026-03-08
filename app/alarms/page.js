@@ -6,6 +6,7 @@ import Sidebar from "@/components/shell/Sidebar";
 import Topbar from "@/components/shell/Topbar";
 import Panel from "@/components/shell/Panel";
 import { getAlarms } from "@/lib/api";
+import { getSocket } from "@/lib/socket";
 
 function severityStyle(severity) {
   if (severity === "Critical") return { background: "#450a0a", color: "#f87171" };
@@ -22,6 +23,27 @@ export default function AlarmsPage() {
     getAlarms()
       .then((res) => setAlarms(res.data || []))
       .catch((err) => setError(err.message));
+  }, []);
+
+  useEffect(() => {
+    const socket = getSocket();
+
+    socket.on("alarm.created", (alarm) => {
+      setAlarms((current) => [alarm, ...current]);
+    });
+
+    socket.on("alarm.updated", (updatedAlarm) => {
+      setAlarms((current) =>
+        current.map((alarm) =>
+          alarm.id === updatedAlarm.id ? updatedAlarm : alarm
+        )
+      );
+    });
+
+    return () => {
+      socket.off("alarm.created");
+      socket.off("alarm.updated");
+    };
   }, []);
 
   return (
