@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useMemo } from "react";
 import ReactFlow, {
   Background,
@@ -151,6 +152,5 @@ export default function TopologyView({ nodes = [], links = [] }) {
         <Controls />
       </ReactFlow>
     </div>
-
   );
 }
