@@ -7,6 +7,7 @@ import Sidebar from "@/components/shell/Sidebar";
 import Topbar from "@/components/shell/Topbar";
 import Panel from "@/components/shell/Panel";
 import { getMapSites, getMapLinks } from "@/lib/api";
+import { getSocket } from "@/lib/socket";
 
 const NetworkMap = dynamic(() => import("@/components/maps/NetworkMap"), {
   ssr: false,
@@ -24,6 +25,43 @@ export default function NetworkMapPage() {
         setLinks(linksRes.data || []);
       })
       .catch((err) => setError(err.message));
+  }, []);
+
+  useEffect(() => {
+    const socket = getSocket();
+
+    socket.on("alarm.created", (alarm) => {
+      setSites((current) =>
+        current.map((site) =>
+          site.id === alarm.siteId
+            ? {
+                ...site,
+                status: "Down",
+                activeAlarms: (site.activeAlarms || 0) + 1,
+                lastSeen: alarm.startedAt || new Date().toISOString(),
+              }
+            : site
+        )
+      );
+    });
+
+    socket.on("alarm.updated", (updatedAlarm) => {
+      setSites((current) =>
+        current.map((site) =>
+          site.id === updatedAlarm.siteId
+            ? {
+                ...site,
+                lastSeen: updatedAlarm.startedAt || site.lastSeen,
+              }
+            : site
+        )
+      );
+    });
+
+    return () => {
+      socket.off("alarm.created");
+      socket.off("alarm.updated");
+    };
   }, []);
 
   return (
