@@ -152,5 +152,6 @@ export default function TopologyView({ nodes = [], links = [] }) {
         <Controls />
       </ReactFlow>
     </div>
+
   );
 }
