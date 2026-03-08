@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import ProtectedRoute from "@/components/auth/ProtectedRoute";
 import Sidebar from "@/components/shell/Sidebar";
@@ -42,5 +41,3 @@ export default function TopologyPage() {
     </ProtectedRoute>
   );
 }
-
-
