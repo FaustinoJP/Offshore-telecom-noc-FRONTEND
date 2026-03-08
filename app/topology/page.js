@@ -12,6 +12,7 @@ const TopologyView = dynamic(() => import("@/components/topology/TopologyView"),
   ssr: false,
 });
 
+
 export default function TopologyPage() {
   const [nodes, setNodes] = useState([]);
   const [links, setLinks] = useState([]);
