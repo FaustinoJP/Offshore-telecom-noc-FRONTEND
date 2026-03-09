@@ -6,11 +6,13 @@ import { removeToken } from "@/lib/auth";
 
 const links = [
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/command-center", label: "Command Center" },
   { href: "/sites", label: "Sites" },
   { href: "/alarms", label: "Alarms" },
   { href: "/incidents", label: "Incidents" },
   { href: "/network-map", label: "Network Map" },
   { href: "/topology", label: "Topology" },
+  
 ];
 
 export default function Sidebar() {
