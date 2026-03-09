@@ -75,17 +75,17 @@ export default function NetworkMap({ sites = [], links = [] }) {
           if (site.lat == null || site.lng == null) return null;
 
           return (
-            <CircleMarker
-              key={site.id}
-              center={[site.lat, site.lng]}
-              radius={12}
-              pathOptions={{
-                color: getStatusColor(site.status),
-                fillColor: getStatusColor(site.status),
-                fillOpacity: 0.9,
-                weight: 2,
-              }}
-            >
+               <CircleMarker
+                  key={site.id}
+                  center={[site.lat, site.lng]}
+                  radius={site.status === "Down" ? 16 : site.status === "Degraded" ? 14 : 12}
+                  pathOptions={{
+                    color: getStatusColor(site.status),
+                    fillColor: getStatusColor(site.status),
+                    fillOpacity: 0.9,
+                    weight: site.status === "Down" ? 4 : 2,
+                  }}
+                >
               <Popup>
                 <div style={{ minWidth: 220 }}>
                   <div style={{ fontWeight: 700, marginBottom: 8 }}>{site.name}</div>
