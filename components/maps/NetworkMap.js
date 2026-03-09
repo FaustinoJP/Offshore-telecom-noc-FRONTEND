@@ -145,4 +145,5 @@ export default function NetworkMap({ sites = [], links = [] }) {
       </MapContainer>
     </div>
   );
+
 }
