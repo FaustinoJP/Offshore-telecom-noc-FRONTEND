@@ -262,7 +262,7 @@ export default function LoginPage() {
                 border: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              <div style={{ color: "#e2e8f0", fontWeight: 800, marginBottom: 8 }}>
+              //<div style={{ color: "#e2e8f0", fontWeight: 800, marginBottom: 8 }}>
                // Recommended Demo Credentials
               
         </section>
