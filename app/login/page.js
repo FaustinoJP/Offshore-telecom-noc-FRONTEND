@@ -263,15 +263,8 @@ export default function LoginPage() {
               }}
             >
               <div style={{ color: "#e2e8f0", fontWeight: 800, marginBottom: 8 }}>
-                Recommended Demo Credentials
-              </div>
-              <div style={{ color: "#94a3b8", fontSize: 14, lineHeight: 1.8 }}>
-                <strong style={{ color: "#cbd5e1" }}>Email:</strong> admin@nocsystem.local
-                <br />
-                <strong style={{ color: "#cbd5e1" }}>Password:</strong> admin123
-              </div>
-            </div>
-          </div>
+               // Recommended Demo Credentials
+              
         </section>
 
         <section
